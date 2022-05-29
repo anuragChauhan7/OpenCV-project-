@@ -1,41 +1,4 @@
-import cv2
-from tracker2 import *
-import numpy as np
-end = 0
 
-#Creater Tracker Object
-tracker = EuclideanDistTracker()
-
-#cap = cv2.VideoCapture("SAMPLE.mp4")
-cap = cv2.VideoCapture("SAMPLE.mp4")
-f = 25
-w = int(1000/(f-1))
-print(w)
-
-
-#Object Detection
-object_detector = cv2.createBackgroundSubtractorMOG2(history=None,varThreshold=None)
-#100,5
-
-#KERNALS
-kernalOp = np.ones((3,3),np.uint8)
-kernalOp2 = np.ones((5,5),np.uint8)
-kernalCl = np.ones((11,11),np.uint8)
-fgbg=cv2.createBackgroundSubtractorMOG2(detectShadows=True)
-kernal_e = np.ones((5,5),np.uint8)
-
-while True:
-    ret,frame = cap.read()
-    frame = cv2.resize(frame, None, fx=0.5, fy=0.5)
-    height,width,_ = frame.shape
-    #print(height,width)
-    #540,960
-
-
-    #Extract ROI
-    roi = frame[50:540,200:960]
-
-    #MASKING METHOD 1
     mask = object_detector.apply(roi)
     _, mask = cv2.threshold(mask, 250, 255, cv2.THRESH_BINARY)
 
